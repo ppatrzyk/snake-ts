@@ -1,43 +1,28 @@
 {
-	"name": "snake-ts",
-	"description": "Snake game clone using Phaser and Svelte.",
-	"private": true,
-	"version": "0.0.1",
-	"repository": {
+    "name": "template-vite-ts",
+    "description": "A Phaser 3 TypeScript template using Vite.",
+    "version": "1.2.1",
+    "repository": {
         "type": "git",
-        "url": "git+https://github.com/ppatrzyk/snake-ts"
+        "url": "git+https://github.com/phaserjs/template-vite-ts.git"
     },
-    "author": "Piotr Patrzyk",
+    "author": "Phaser Studio <support@phaser.io> (https://phaser.io/)",
     "license": "MIT",
     "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
     "bugs": {
-        "url": "https://github.com/ppatrzyk/snake-ts/issues"
+        "url": "https://github.com/phaserjs/template-vite-ts/issues"
     },
-    "homepage": "https://github.com/ppatrzyk/snake-ts",
-    "keywords": [
-        "phaser",
-        "phaser3",
-        "svelte",
-        "vite"
-    ],
-	"scripts": {
-		"dev": "vite --config vite/config.dev.mjs",
-		"build": "vite build --config vite/config.prod.mjs"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.1.1",
-		"@sveltejs/adapter-static": "^3.0.1",
-		"@sveltejs/kit": "^2.5.2",
-		"@sveltejs/vite-plugin-svelte": "^3.0.2",
-		"svelte": "^4.2.12",
-		"svelte-check": "^3.6.6",
-		"terser": "^5.28.1",
-		"tslib": "^2.6.2",
-		"typescript": "^5.3.3",
-		"vite": "^5.1.4"
-	},
-	"type": "module",
-	"dependencies": {
-		"phaser": "^3.80.1"
-	}
+    "homepage": "https://github.com/phaserjs/template-vite-ts#readme",
+    "scripts": {
+        "dev": "vite --config vite/config.dev.mjs",
+        "build": "vite build --config vite/config.prod.mjs"
+    },
+    "devDependencies": {
+        "terser": "^5.28.1",
+        "typescript": "^5.3.3",
+        "vite": "^5.1.4"
+    },
+    "dependencies": {
+        "phaser": "^3.80.1"
+    }
 }

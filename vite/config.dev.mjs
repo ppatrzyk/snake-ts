@@ -1,12 +1,17 @@
 import { defineConfig } from 'vite';
-import { sveltekit } from '@sveltejs/kit/vite';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [
-		sveltekit(),
-	],
-	server: {
-		port: 8080
-	}
-})
+    base: './',
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    phaser: ['phaser']
+                }
+            }
+        },
+    },
+    server: {
+        port: 8080
+    }
+});

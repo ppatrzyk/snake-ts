@@ -1,19 +1,32 @@
 import { defineConfig } from 'vite';
-import { sveltekit } from '@sveltejs/kit/vite';
 
-process.stdout.write(`Building for production...\n`);
-const line = "---------------------------------------------------------";
-const msg = `❤️❤️❤️ Tell us about your game! - games@phaser.io ❤️❤️❤️`;
-process.stdout.write(`${line}\n${msg}\n${line}\n`);
-
+const phasermsg = () => {
+    return {
+        name: 'phasermsg',
+        buildStart() {
+            process.stdout.write(`Building for production...\n`);
+        },
+        buildEnd() {
+            const line = "---------------------------------------------------------";
+            const msg = `❤️❤️❤️ Tell us about your game! - games@phaser.io ❤️❤️❤️`;
+            process.stdout.write(`${line}\n${msg}\n${line}\n`);
+            
+            process.stdout.write(`✨ Done ✨\n`);
+        }
+    }
+}   
 
 export default defineConfig({
     base: './',
-    plugins: [
-        sveltekit(),
-    ],
-    logLevel: 'error',
+    logLevel: 'warning',
     build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    phaser: ['phaser']
+                }
+            }
+        },
         minify: 'terser',
         terserOptions: {
             compress: {
@@ -24,6 +37,11 @@ export default defineConfig({
                 comments: false
             }
         }
-    }
+    },
+    server: {
+        port: 8080
+    },
+    plugins: [
+        phasermsg()
+    ]
 });
-
