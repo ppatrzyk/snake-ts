@@ -4,12 +4,11 @@ export class MainMenu extends Scene
 {
     title: GameObjects.Text;
 
-    constructor ()
-    {
+    constructor() {
         super('MainMenu');
     }
 
-    init () {
+    init(): void {
         let textStyle:Phaser.Types.GameObjects.Text.TextStyle = {
             fontFamily: 'Mono', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
@@ -23,8 +22,13 @@ export class MainMenu extends Scene
         this.registry.set("titleY", titleY);
     }
 
-    create ()
-    {
+    preload(): void {
+        this.load.setPath('assets');
+        this.load.image('apple', 'apple.png');
+        this.load.image('snake_body', 'snake_body.png');
+    }
+
+    create(): void {
         this.title = this.add.text(
             this.registry.get("titleX"),
             this.registry.get("titleY"),
