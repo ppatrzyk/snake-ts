@@ -1,66 +1,73 @@
-import { Scene } from 'phaser';
+import { GameObjects, Scene } from 'phaser';
+import { Snake } from "../objects/Snake"
+import { Apple } from '../objects/Apple';
 
-type Direction = "up" | "down" | "right" | "left"
+export type Coordinates = Array<Array<number>>;
+export const STEP_SIZE: number = 32;
 
 export class Game extends Scene
 {
     camera: Phaser.Cameras.Scene2D.Camera;
-    snake: Phaser.GameObjects.Image;
-
-    // grid: Phaser.Tilemaps.Tilemap;
-    cellSize: number;
+    snake: Snake;
+    apple: Apple;
+    gameCoordinates: Coordinates;
     
-    stepFreq: number;
-    timer: number;
+    stepFreq: number = 500;
+    timer: number = 500;
 
     constructor() {
         super('Game');
+    }
+
+    // possible coordicates within game, not taken by snake
+    private getEmptyCoordinates() {
+        // TODO all - snake
+        // this.snake.getBodyCoordinates()
+        return this.gameCoordinates
     }
 
     create(): void {
         this.camera = this.cameras.main;
         this.camera.setBackgroundColor("#A0A0A0");
 
-        this.stepFreq = 1000;
-        this.timer = 0;
+        this.snake = new Snake(this)
+        this.snake = this.add.existing(this.snake)
 
-        this.cellSize = 32;
-        let numberCellsX:number = Number(this.game.config.width) / this.cellSize;
-        let numberCellsY:number = Number(this.game.config.height) / this.cellSize;
-        
-        this.snake = this.add.image(0, 0, "snake_body");
-        this.snake.setOrigin(0)
-        // this.grid = this.make.tilemap({
-        //     width: numberCellsX,
-        //     height: numberCellsY,
-        //     tileWidth: cellSize,
-        //     tileHeight: cellSize
-        // });
-        // const tileset = this.grid.addTilesetImage('tiles', null, 32, 32, 1, 2);
-        // const layer = this.grid.createLayer("gameLayer", tileset, 0, 0);
-        // this.grid = this.add.grid(0, 0, Number(this.game.config.width), Number(this.game.config.height), 32, 32);
-        // this.grid.setFillStyle(0x4d4d4d, 1);
-        // this.grid.showCells = true;
-        // this.grid.showOutline = true;
-        // console.log(this.grid)
+        this.gameCoordinates = new Array();
+        for (let i = 0; i < Number(this.game.config.width); i += STEP_SIZE) {
+            for (let j = 0; j < Number(this.game.config.height); j += STEP_SIZE) {
+                this.gameCoordinates.push([i, j])
+            }
+        }
 
-        this.input.once('pointerdown', () => {
+        // this.apple = new Apple(this, )
 
-            this.scene.start('GameOver');
-
-        });
+        this.input.keyboard!.on('keydown-A', () => {this.snake.changeDirection("left")});
+        this.input.keyboard!.on('keydown-LEFT', () => {this.snake.changeDirection("left")});
+        this.input.keyboard!.on('keydown-S', () => {this.snake.changeDirection("down")});
+        this.input.keyboard!.on('keydown-DOWN', () => {this.snake.changeDirection("down")});
+        this.input.keyboard!.on('keydown-W', () => {this.snake.changeDirection("up")});
+        this.input.keyboard!.on('keydown-UP', () => {this.snake.changeDirection("up")});
+        this.input.keyboard!.on('keydown-D', () => {this.snake.changeDirection("right")});
+        this.input.keyboard!.on('keydown-RIGHT', () => {this.snake.changeDirection("right")});
     }
 
-    move() {
+    tick() {
         console.log("update")
-        // TODO move based on current direction
-        this.snake.setPosition(this.snake.x+this.cellSize, this.snake.y);
+        console.log(this.getEmptyCoordinates())
+        console.log(this.snake.getBodyCoordinates())
+        // if eats, grow, otherwise move
+        // this.snake.grow();
+        this.snake.move();
+        // check collision 
+        // this.game.config.width
+        // this.scene.sta rt('GameOver');
     }
 
     update(_time: number, delta: number): void {
         this.timer += delta;
         if (this.timer >= this.stepFreq) {
-            this.move()
+            this.tick()
             this.timer = 0;
         }
     }

@@ -20,10 +20,8 @@ export class GameOver extends Scene
             this.registry.get("textStyle")
         ).setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
-
+        this.input.keyboard!.once('keydown', () => {
             this.scene.start('MainMenu');
-
         });
     }
 }

@@ -36,10 +36,8 @@ export class MainMenu extends Scene
             this.registry.get("textStyle")
         ).setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
-
+        this.input.keyboard!.on('keydown', () => {
             this.scene.start('Game');
-
         });
     }
 }
