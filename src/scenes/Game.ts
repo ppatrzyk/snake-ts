@@ -37,7 +37,7 @@ export class Game extends Scene
 
     create(): void {
         this.camera = this.cameras.main;
-        this.camera.setBackgroundColor("#A0A0A0");
+        this.camera.setBackgroundColor("#262626");
 
         this.gameover = false;
 

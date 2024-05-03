@@ -1,18 +1,24 @@
 {
-    "name": "template-vite-ts",
-    "description": "A Phaser 3 TypeScript template using Vite.",
-    "version": "1.2.1",
-    "repository": {
+	"name": "snake-ts",
+	"description": "Snake game clone using Phaser.",
+	"private": true,
+	"version": "0.0.1",
+	"repository": {
         "type": "git",
-        "url": "git+https://github.com/phaserjs/template-vite-ts.git"
+        "url": "git+https://github.com/ppatrzyk/snake-ts"
     },
-    "author": "Phaser Studio <support@phaser.io> (https://phaser.io/)",
+    "author": "Piotr Patrzyk",
     "license": "MIT",
     "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
     "bugs": {
-        "url": "https://github.com/phaserjs/template-vite-ts/issues"
+        "url": "https://github.com/ppatrzyk/snake-ts/issues"
     },
-    "homepage": "https://github.com/phaserjs/template-vite-ts#readme",
+    "homepage": "https://github.com/ppatrzyk/snake-ts",
+    "keywords": [
+        "phaser",
+        "phaser3",
+        "vite"
+    ],
     "scripts": {
         "dev": "vite --config vite/config.dev.mjs",
         "build": "vite build --config vite/config.prod.mjs"

@@ -3,13 +3,27 @@ body {
     padding: 0;
     color: rgba(255, 255, 255, 0.87);
     background-color: #000000;
+    font-family: "Menlo";
 }
 
 #app {
     width: 100%;
-    height: 100vh;
+    height: 95vh;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#footer {
+    width: 100%;
+    height: 5vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    color: #24d12a;
 }

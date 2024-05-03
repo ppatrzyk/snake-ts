@@ -10,8 +10,8 @@ export class MainMenu extends Scene
 
     init(): void {
         let textStyle:Phaser.Types.GameObjects.Text.TextStyle = {
-            fontFamily: 'Mono', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
+            fontFamily: 'Menlo', fontSize: 38, color: '#24d12a',
+            stroke: '#000000', strokeThickness: 2,
             align: 'center',
         };
         this.registry.set("textStyle", textStyle);
