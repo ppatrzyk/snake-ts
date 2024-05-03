@@ -9,13 +9,16 @@ export const STEP_SIZE: number = 32;
 export class Game extends Scene
 {
     camera: Phaser.Cameras.Scene2D.Camera;
+    gameover_text : Phaser.GameObjects.Text;
+    gameover: boolean;
+
     snake: Snake;
     apple: Apple;
     gameCoordinates: CoordinateList;
     
     stepSize: number = STEP_SIZE;
     stepFreq: number = 100;
-    timer: number = 100;
+    timer: number = this.stepFreq;
 
     constructor() {
         super('Game');
@@ -35,6 +38,8 @@ export class Game extends Scene
     create(): void {
         this.camera = this.cameras.main;
         this.camera.setBackgroundColor("#A0A0A0");
+
+        this.gameover = false;
 
         this.snake = new Snake(this, this.stepSize, this.stepSize)
         this.snake = this.add.existing(this.snake)
@@ -58,6 +63,22 @@ export class Game extends Scene
         this.input.keyboard!.on('keydown-UP', () => {this.snake.changeDirection("up")});
         this.input.keyboard!.on('keydown-D', () => {this.snake.changeDirection("right")});
         this.input.keyboard!.on('keydown-RIGHT', () => {this.snake.changeDirection("right")});
+
+        this.input.keyboard!.on('keydown-SPACE', () => {
+            if (this.gameover) {
+                this.scene.start('MainMenu');
+            }
+        });
+    }
+
+    private endGame(score: number) {
+        this.gameover = true;
+        this.gameover_text = this.add.text(
+            this.registry.get("titleX"),
+            this.registry.get("titleY"),
+            `Game over\nscore: ${score}/${this.gameCoordinates.length}`,
+            this.registry.get("textStyle")
+        ).setOrigin(0.5);
     }
 
     tick() {
@@ -69,30 +90,31 @@ export class Game extends Scene
             this.snake.move(true);
             this.apple.destroy(true);
             let emptyCoordinates = this.getEmptyCoordinates(snakeCoordinates);
-            // todo if empty, game over
+            if (emptyCoordinates.length === 0) {
+                this.endGame(score);
+            }
             let randomCoordinate: Coordinate = emptyCoordinates[Math.floor(Math.random() * emptyCoordinates.length)];
             let [x, y] = randomCoordinate.split("_").map(c => Number(c));
             this.apple = new Apple(this, x, y);
             this.apple.setOrigin(0)
             this.apple = this.add.existing(this.apple);
-        // } else if () {
-            // TODO die on collision
-        //     // snake collision, game over
+        } else if (
+            (snakeCoordinates.filter(x => !this.gameCoordinates.includes(x)).length > 0) || 
+            ((new Set(snakeCoordinates)).size < snakeCoordinates.length)
+        ) {
+            this.endGame(score);
         } else {
             this.snake.move(false);
         }
-        // check collision here
-
-        // check collision 
-        // this.game.config.width
-        // this.scene.sta rt('GameOver');
     }
 
     update(_time: number, delta: number): void {
-        this.timer += delta;
-        if (this.timer >= this.stepFreq) {
-            this.tick()
-            this.timer = 0;
+        if (!this.gameover) {
+            this.timer += delta;
+            if (this.timer >= this.stepFreq) {
+                this.tick()
+                this.timer = 0;
+            }
         }
     }
 }

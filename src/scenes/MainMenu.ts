@@ -32,11 +32,11 @@ export class MainMenu extends Scene
         this.title = this.add.text(
             this.registry.get("titleX"),
             this.registry.get("titleY"),
-            'Snake',
+            'Snake\npress SPACE to start\ncontrol: ASWD or arrows',
             this.registry.get("textStyle")
         ).setOrigin(0.5);
 
-        this.input.keyboard!.on('keydown', () => {
+        this.input.keyboard!.on('keydown-SPACE', () => {
             this.scene.start('Game');
         });
     }

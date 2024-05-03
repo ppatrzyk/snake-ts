@@ -7,7 +7,8 @@ type Body = Array<GameObjects.Image>;
 export class Snake extends GameObjects.GameObject {
     
     snakeBody: Body = new Array();
-    currentDirection: Direction = "right";
+    previousDirection: Direction = "right";
+    nextDirection: Direction = "right";
     stepSize: number = STEP_SIZE;
 
     constructor(scene: Scene, initX: number, initY: number) {
@@ -21,15 +22,13 @@ export class Snake extends GameObjects.GameObject {
     };
 
     changeDirection(newDirection: Direction) {
-        // TODO fix reversing direction
-        // must keep last effective direction, possible to revrt with multiple actions between tick
         let horizontal: Set<Direction> = new Set(["left", "right"]);
         let vertical: Set<Direction> = new Set(["down", "up"]);
-        let change: Set<Direction> = new Set([this.currentDirection, newDirection]);
+        let change: Set<Direction> = new Set([this.previousDirection, newDirection]);
         if (this.areSetsEqual(change, horizontal) || this.areSetsEqual(change, vertical)) {
             // ignore, opposite direction
         } else {
-            this.currentDirection = newDirection;
+            this.nextDirection = newDirection;
         }
     }
 
@@ -52,7 +51,7 @@ export class Snake extends GameObjects.GameObject {
         let tail = this.snakeBody[0] as GameObjects.Image;
         let x: number
         let y: number
-        switch (this.currentDirection) {
+        switch (this.nextDirection) {
             case "left":
                 [x, y] = [head.x-this.stepSize, head.y]
                 break
@@ -69,6 +68,7 @@ export class Snake extends GameObjects.GameObject {
                 [x, y] = [head.x, head.y];
                 break
         }
+        this.previousDirection = this.nextDirection;
         if (!grow) {
             this.snakeBody.shift();
             tail.destroy(true);
