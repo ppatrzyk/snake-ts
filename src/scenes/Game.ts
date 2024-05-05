@@ -76,7 +76,7 @@ export class Game extends Scene
         this.gameover_text = this.add.text(
             this.registry.get("titleX"),
             this.registry.get("titleY"),
-            `Game over\nscore: ${score}/${this.gameCoordinates.length}`,
+            `Game over\nscore: ${score}/${this.gameCoordinates.length}\npress space`,
             this.registry.get("textStyle")
         ).setOrigin(0.5);
     }

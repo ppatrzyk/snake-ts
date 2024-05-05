@@ -32,7 +32,7 @@ export class MainMenu extends Scene
         this.title = this.add.text(
             this.registry.get("titleX"),
             this.registry.get("titleY"),
-            'Snake\npress SPACE to start\ncontrol: ASWD or arrows',
+            'SNAKE\npress space',
             this.registry.get("textStyle")
         ).setOrigin(0.5);
 
