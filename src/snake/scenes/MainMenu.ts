@@ -9,11 +9,10 @@ export class MainMenu extends Scene {
 
   init(): void {
     const textStyle: Phaser.Types.GameObjects.Text.TextStyle = {
-      fontFamily: "Menlo",
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
       fontSize: 38,
       color: "#24d12a",
-      stroke: "#000000",
-      strokeThickness: 2,
       align: "center",
     };
     this.registry.set("textStyle", textStyle);

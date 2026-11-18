@@ -1,4 +1,4 @@
-import { Game as MainGame } from "./scenes/Game";
+import { Game } from "./scenes/Game";
 import { MainMenu } from "./scenes/MainMenu";
 
 import { type Types } from "phaser";
@@ -11,7 +11,7 @@ const gameConfig: Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [MainMenu, MainGame],
+  scene: [MainMenu, Game],
 };
 
 export default gameConfig;

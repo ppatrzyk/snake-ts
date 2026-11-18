@@ -36,7 +36,9 @@ function GameWrapper({ width, height, onGameReady }: GameCanvasProps) {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ width, height }} className="mx-auto" />
+    <div className="border-2 border-zinc-500">
+      <div ref={containerRef} style={{ width, height }} className="mx-auto" />
+    </div>
   );
 }
 

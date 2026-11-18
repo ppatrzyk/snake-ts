@@ -2,6 +2,8 @@ import { type GameObjects, Scene } from "phaser";
 import { Snake } from "../objects/Snake";
 import { Apple } from "../objects/Apple";
 
+import { eventBridge, GameEvents } from "../EventBridge";
+
 export type Coordinate = `${number}_${number}`;
 export type CoordinateList = Array<Coordinate>;
 export const STEP_SIZE: number = 32;
@@ -39,6 +41,7 @@ export class Game extends Scene {
   }
 
   create(): void {
+    eventBridge.on(GameEvents.RESTART_GAME, () => this.endGame(0), this);
     this.camera = this.cameras.main;
     this.camera.setBackgroundColor("#262626");
 
@@ -105,7 +108,8 @@ export class Game extends Scene {
   tick() {
     const snakeCoordinates = this.snake.getBodyCoordinates();
     const score: number = snakeCoordinates.length;
-    console.log("tick, score ", score);
+    // console.log("tick, score ", score);
+    eventBridge.emit(GameEvents.SCORE_UPDATE, { score: score });
     const appleCoordinate = this.extractXY(this.apple);
     if (snakeCoordinates.includes(appleCoordinate)) {
       this.snake.move(true);
