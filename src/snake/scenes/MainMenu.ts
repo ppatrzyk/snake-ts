@@ -25,7 +25,6 @@ export class MainMenu extends Scene {
   }
 
   preload(): void {
-    this.load.setPath("assets");
     this.load.image("apple", "apple.png");
     this.load.image("snake_body", "snake_body.png");
   }

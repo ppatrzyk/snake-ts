@@ -1,13 +1,11 @@
 import { Game as MainGame } from "./scenes/Game";
 import { MainMenu } from "./scenes/MainMenu";
 
-import { Game, type Types } from "phaser";
+import { type Types } from "phaser";
+import Phaser from "phaser";
 
-const config: Types.Core.GameConfig = {
+const gameConfig: Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 1024,
-  height: 768,
-  parent: "game-container",
   backgroundColor: "#262626",
   scale: {
     mode: Phaser.Scale.FIT,
@@ -16,4 +14,4 @@ const config: Types.Core.GameConfig = {
   scene: [MainMenu, MainGame],
 };
 
-export default new Game(config);
+export default gameConfig;
