@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { eventBridge, GameEvents } from "../snake/EventBridge";
 
-function GameSettings() {
+type GameSettingsProps = {
+  eventEmitter: Phaser.Events.EventEmitter;
+};
+
+function GameSettings({ eventEmitter }: GameSettingsProps) {
   const [score, setScore] = useState(0);
 
   useEffect(() => {
@@ -9,10 +12,10 @@ function GameSettings() {
       setScore(data.score);
     };
 
-    eventBridge.on(GameEvents.SCORE_UPDATE, onScoreUpdate);
+    eventEmitter.on("scoreUpdate", onScoreUpdate);
 
     return () => {
-      eventBridge.off(GameEvents.SCORE_UPDATE, onScoreUpdate);
+      eventEmitter.off("scoreUpdate", onScoreUpdate);
     };
   }, []);
 
@@ -20,9 +23,7 @@ function GameSettings() {
     <div className="border-2 border-zinc-500 min-w-md mb-4 text-center">
       <h1 className="text-2xl">SNAKE</h1>
       <p>{score}</p>
-      <button onClick={() => eventBridge.emit(GameEvents.RESTART_GAME)}>
-        Restart
-      </button>
+      <button onClick={() => console.log("TODO restart")}>Restart</button>
     </div>
   );
 }

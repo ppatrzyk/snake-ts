@@ -1,7 +1,7 @@
 import { Scene, type GameObjects } from "phaser";
 
 export class MainMenu extends Scene {
-  title: GameObjects.Text;
+  title!: GameObjects.Text;
 
   constructor() {
     super("MainMenu");

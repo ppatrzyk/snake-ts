@@ -1,7 +1,7 @@
 import { Game } from "./scenes/Game";
 import { MainMenu } from "./scenes/MainMenu";
 
-import { type Types } from "phaser";
+import type { Types } from "phaser";
 import Phaser from "phaser";
 
 const gameConfig: Types.Core.GameConfig = {
