@@ -48,10 +48,16 @@ function GameComponent() {
     <div className="mb-2">
       <div className="grid grid-cols-1 md:grid-cols-2 border-2 border-zinc-500 min-w-md mb-4 p-2 text-center">
         <div>
-          <h1 className="text-4xl font-bold text-snake m-2">SNAKE</h1>
-          <p>Best score: {bestScore}</p>
+          <h1 className="text-4xl font-bold m-2 bg-gradient-to-r from-emerald-300 via-snake to-emerald-500 bg-clip-text text-transparent">
+            SNAKE
+          </h1>
+
+          <p>
+            Best score:{" "}
+            <span className="text-snake font-bold">{bestScore}</span>
+          </p>
           <p className={`${gameRunning ? "" : "hidden"}`}>
-            Current core: {score}
+            Current score: <span className="text-snake">{score}</span>
           </p>
         </div>
         <div>
