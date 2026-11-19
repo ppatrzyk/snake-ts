@@ -9,15 +9,19 @@ function GameComponent() {
 
   const [gameRunning, setGameRunning] = useState(false);
   const [score, setScore] = useState(1);
+  const [pastScores, setPastScores] = useState<number[]>([]);
   const [mapSize, setMapSize] = useState(defaultMapSize);
   const [mapSizePx, setMapSizePx] = useState(STEP_SIZE * mapSize); // this should not be reactive, set only on explicit restart
   const [gameKey, setGameKey] = useState(crypto.randomUUID());
 
+  const bestScore = pastScores.length > 0 ? Math.max(...pastScores) : 0;
+
   const eventEmitter = useMemo(() => new Phaser.Events.EventEmitter(), []);
 
   useEffect(() => {
-    const onGameFinished = () => {
+    const onGameFinished = (data: { score: number }) => {
       setGameRunning(false);
+      setPastScores((currentPastScores) => [...currentPastScores, data.score]);
     };
     const onGameStarted = () => {
       setScore(1);
@@ -52,7 +56,10 @@ function GameComponent() {
         <p>
           Value: {mapSize}, {mapSizePx}
         </p>
-        <p className={`${gameRunning ? "" : "hidden"}`}>Score: {score}</p>
+        <p>Best score: {bestScore}</p>
+        <p className={`${gameRunning ? "" : "hidden"}`}>
+          Current core: {score}
+        </p>
         <button
           type="button"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
