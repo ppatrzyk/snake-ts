@@ -85,4 +85,8 @@ export class Snake extends GameObjects.GameObject {
     }
     this.addBodyPart(x, y);
   }
+
+  getScore(): number {
+    return this.getBodyCoordinates().length;
+  }
 }

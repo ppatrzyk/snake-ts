@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import PhaserWrapper from "./PhaserWrapper";
 import Phaser from "phaser";
@@ -7,7 +7,8 @@ import { STEP_SIZE } from "../snake/scenes/Game";
 function GameComponent() {
   const defaultMapSize = 24;
 
-  const [score, setScore] = useState(0);
+  const [gameRunning, setGameRunning] = useState(false);
+  const [score, setScore] = useState(1);
   const [mapSize, setMapSize] = useState(defaultMapSize);
   const [mapSizePx, setMapSizePx] = useState(STEP_SIZE * mapSize); // this should not be reactive, set only on explicit restart
   const [gameKey, setGameKey] = useState(crypto.randomUUID());
@@ -15,13 +16,24 @@ function GameComponent() {
   const eventEmitter = useMemo(() => new Phaser.Events.EventEmitter(), []);
 
   useEffect(() => {
+    const onGameFinished = () => {
+      setGameRunning(false);
+    };
+    const onGameStarted = () => {
+      setScore(1);
+      setGameRunning(true);
+    };
     const onScoreUpdate = (data: { score: number }) => {
       setScore(data.score);
     };
 
+    eventEmitter.on("gameFinished", onGameFinished);
+    eventEmitter.on("gameStarted", onGameStarted);
     eventEmitter.on("scoreUpdate", onScoreUpdate);
 
     return () => {
+      eventEmitter.off("gameFinished", onGameFinished);
+      eventEmitter.off("gameStarted", onGameStarted);
       eventEmitter.off("scoreUpdate", onScoreUpdate);
     };
   }, [eventEmitter.on, eventEmitter.off]);
@@ -40,7 +52,7 @@ function GameComponent() {
         <p>
           Value: {mapSize}, {mapSizePx}
         </p>
-        <p>Score: {score}</p>
+        <p className={`${gameRunning ? "" : "hidden"}`}>Score: {score}</p>
         <button
           type="button"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {

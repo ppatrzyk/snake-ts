@@ -39,6 +39,7 @@ export class Game extends Scene {
   }
 
   create(): void {
+    this.game.eventEmitter.emit("gameStarted");
     this.camera = this.cameras.main;
     this.camera.setBackgroundColor("#262626");
 
@@ -91,6 +92,7 @@ export class Game extends Scene {
   }
 
   private endGame(score: number) {
+    this.game.eventEmitter.emit("gameFinished", { score: score });
     this.gameover = true;
     this.gameover_text = this.add
       .text(
@@ -104,13 +106,12 @@ export class Game extends Scene {
 
   tick() {
     const snakeCoordinates = this.snake.getBodyCoordinates();
-    const score: number = snakeCoordinates.length;
-    // console.log("tick, score ", score);
-    this.game.eventEmitter.emit("scoreUpdate", { score: score });
     const appleCoordinate = this.extractXY(this.apple);
     if (snakeCoordinates.includes(appleCoordinate)) {
       this.snake.move(true);
       this.apple.destroy(true);
+      const score = this.snake.getScore();
+      this.game.eventEmitter.emit("scoreUpdate", { score: score });
       const emptyCoordinates = this.getEmptyCoordinates(snakeCoordinates);
       if (emptyCoordinates.length === 0) {
         this.endGame(score);
@@ -126,6 +127,7 @@ export class Game extends Scene {
         0 ||
       new Set(snakeCoordinates).size < snakeCoordinates.length
     ) {
+      const score = this.snake.getScore();
       this.endGame(score);
     } else {
       this.snake.move(false);
