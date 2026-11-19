@@ -5,7 +5,7 @@ import Phaser from "phaser";
 import { STEP_SIZE } from "../snake/scenes/Game";
 
 function GameComponent() {
-  const defaultMapSize = 24;
+  const defaultMapSize = 16;
   const defaultSnakeSpeed = 5;
 
   const [gameRunning, setGameRunning] = useState(false);
@@ -46,45 +46,60 @@ function GameComponent() {
 
   return (
     <div className="mb-2">
-      <div className="border-2 border-zinc-500 min-w-md mb-4 p-2 text-center">
-        <h1 className="text-2xl font-bold">SNAKE</h1>
-        <label>
-          <span className="block">Map size: {mapSize}</span>
-          <input
-            type="range"
-            className="h-3 appearance-none rounded-full bg-zinc-500"
-            min={8}
-            max={24}
-            value={mapSize}
-            onChange={(event) => setMapSize(event.target.valueAsNumber)}
-          />
-        </label>
-        <label>
-          <span className="block">Speed: {snakeSpeed}</span>
-          <input
-            type="range"
-            className="h-3 appearance-none rounded-full bg-zinc-500"
-            min={1}
-            max={10}
-            value={snakeSpeed}
-            onChange={(event) => setSnakeSpeed(event.target.valueAsNumber)}
-          />
-        </label>
-        <p>Best score: {bestScore}</p>
-        <p className={`${gameRunning ? "" : "hidden"}`}>
-          Current core: {score}
-        </p>
-        <button
-          type="button"
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.currentTarget.blur();
-            // console.log("restart handler", e.timeStamp, e.isTrusted);
-            setMapSizePx(STEP_SIZE * mapSize);
-            setGameKey(crypto.randomUUID());
-          }}
-        >
-          Restart
-        </button>
+      <div className="grid grid-cols-1 md:grid-cols-2 border-2 border-zinc-500 min-w-md mb-4 p-2 text-center">
+        <div>
+          <h1 className="text-4xl font-bold text-snake m-2">SNAKE</h1>
+          <p>Best score: {bestScore}</p>
+          <p className={`${gameRunning ? "" : "hidden"}`}>
+            Current core: {score}
+          </p>
+        </div>
+        <div>
+          <div className="mb-2">
+            <label>
+              <span className="block text-sm font-semibold">
+                Map size: {mapSize}
+              </span>
+              <input
+                type="range"
+                className="h-3 appearance-none rounded-full bg-zinc-500"
+                min={8}
+                max={24}
+                value={mapSize}
+                onChange={(event) => setMapSize(event.target.valueAsNumber)}
+              />
+            </label>
+          </div>
+          <div className="mb-2">
+            <label>
+              <span className="block text-sm font-semibold">
+                Speed: {snakeSpeed}
+              </span>
+              <input
+                type="range"
+                className="h-3 appearance-none rounded-full bg-zinc-500"
+                min={1}
+                max={10}
+                value={snakeSpeed}
+                onChange={(event) => setSnakeSpeed(event.target.valueAsNumber)}
+              />
+            </label>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="bg-zinc-500 rounded-full px-6 py-2 font-semibold"
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                e.currentTarget.blur();
+                // console.log("restart handler", e.timeStamp, e.isTrusted);
+                setMapSizePx(STEP_SIZE * mapSize);
+                setGameKey(crypto.randomUUID());
+              }}
+            >
+              Restart
+            </button>
+          </div>
+        </div>
       </div>
       <PhaserWrapper
         key={gameKey}

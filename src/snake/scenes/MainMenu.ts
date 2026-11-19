@@ -12,6 +12,7 @@ export class MainMenu extends Scene {
       fontFamily:
         '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
       fontSize: 38,
+      fontStyle: "600",
       color: "#24d12a",
       align: "center",
     };
@@ -33,7 +34,7 @@ export class MainMenu extends Scene {
       .text(
         this.registry.get("titleX"),
         this.registry.get("titleY"),
-        "SNAKE\npress space",
+        "press space",
         this.registry.get("textStyle"),
       )
       .setOrigin(0.5);

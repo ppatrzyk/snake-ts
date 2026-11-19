@@ -21,8 +21,6 @@ function PhaserWrapper({
   useEffect(() => {
     if (gameRef.current) return;
 
-    console.log(width);
-
     const config: Phaser.Types.Core.GameConfig = {
       ...gameConfig,
       width,
@@ -48,7 +46,7 @@ function PhaserWrapper({
   }, [width, height, eventEmitter]);
 
   return (
-    <div className="border-2 border-zinc-500 bg-zinc-100">
+    <div className="border-2 border-zinc-500 bg-zinc-500">
       <div
         ref={containerRef}
         style={{ width, height }}
