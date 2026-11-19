@@ -43,19 +43,20 @@ function GameComponent() {
   }, [eventEmitter.on, eventEmitter.off]);
 
   return (
-    <div>
+    <div className="mb-2">
       <div className="border-2 border-zinc-500 min-w-md mb-4 p-2 text-center">
-        <h1 className="text-2xl">SNAKE</h1>
-        <input
-          type="range"
-          min={8}
-          max={24}
-          value={mapSize}
-          onChange={(event) => setMapSize(event.target.valueAsNumber)}
-        />
-        <p>
-          Value: {mapSize}, {mapSizePx}
-        </p>
+        <h1 className="text-2xl font-bold">SNAKE</h1>
+        <label>
+          <span className="block">Map size: {mapSize}</span>
+          <input
+            type="range"
+            className="h-3 appearance-none rounded-full bg-zinc-500"
+            min={8}
+            max={24}
+            value={mapSize}
+            onChange={(event) => setMapSize(event.target.valueAsNumber)}
+          />
+        </label>
         <p>Best score: {bestScore}</p>
         <p className={`${gameRunning ? "" : "hidden"}`}>
           Current core: {score}

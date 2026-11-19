@@ -35,7 +35,7 @@ function PhaserWrapper({ width, height, eventEmitter }: PhaserWrapperProps) {
   }, [width, height, eventEmitter]);
 
   return (
-    <div className="border-2 border-zinc-500 bg-zinc-50">
+    <div className="border-2 border-zinc-500 bg-zinc-100">
       <div ref={containerRef} style={{ width, height }} className="mx-auto" />
     </div>
   );
