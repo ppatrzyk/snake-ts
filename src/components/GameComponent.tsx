@@ -6,12 +6,14 @@ import { STEP_SIZE } from "../snake/scenes/Game";
 
 function GameComponent() {
   const defaultMapSize = 24;
+  const defaultSnakeSpeed = 5;
 
   const [gameRunning, setGameRunning] = useState(false);
   const [score, setScore] = useState(1);
   const [pastScores, setPastScores] = useState<number[]>([]);
   const [mapSize, setMapSize] = useState(defaultMapSize);
   const [mapSizePx, setMapSizePx] = useState(STEP_SIZE * mapSize); // this should not be reactive, set only on explicit restart
+  const [snakeSpeed, setSnakeSpeed] = useState(defaultSnakeSpeed);
   const [gameKey, setGameKey] = useState(crypto.randomUUID());
 
   const bestScore = pastScores.length > 0 ? Math.max(...pastScores) : 0;
@@ -57,6 +59,17 @@ function GameComponent() {
             onChange={(event) => setMapSize(event.target.valueAsNumber)}
           />
         </label>
+        <label>
+          <span className="block">Speed: {snakeSpeed}</span>
+          <input
+            type="range"
+            className="h-3 appearance-none rounded-full bg-zinc-500"
+            min={1}
+            max={10}
+            value={snakeSpeed}
+            onChange={(event) => setSnakeSpeed(event.target.valueAsNumber)}
+          />
+        </label>
         <p>Best score: {bestScore}</p>
         <p className={`${gameRunning ? "" : "hidden"}`}>
           Current core: {score}
@@ -77,6 +90,7 @@ function GameComponent() {
         key={gameKey}
         width={mapSizePx}
         height={mapSizePx}
+        speed={snakeSpeed}
         eventEmitter={eventEmitter}
       />
     </div>

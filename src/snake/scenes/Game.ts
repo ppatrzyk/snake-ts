@@ -16,8 +16,7 @@ export class Game extends Scene {
   gameCoordinates!: CoordinateList;
 
   stepSize: number = STEP_SIZE;
-  stepFreq: number = 100;
-  timer: number = this.stepFreq;
+  timer: number = 0;
 
   constructor() {
     super("Game");
@@ -136,8 +135,9 @@ export class Game extends Scene {
 
   update(_time: number, delta: number): void {
     if (!this.gameover) {
+      const stepFreq = Math.floor(500 / this.game.speed);
       this.timer += delta;
-      if (this.timer >= this.stepFreq) {
+      if (this.timer >= stepFreq) {
         this.tick();
         this.timer = 0;
       }
