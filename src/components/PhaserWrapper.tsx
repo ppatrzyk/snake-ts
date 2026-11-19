@@ -2,13 +2,13 @@ import { useEffect, useRef } from "react";
 import Phaser from "phaser";
 import gameConfig from "../snake/config";
 
-type GameWrapperProps = {
+type PhaserWrapperProps = {
   width?: number;
   height?: number;
   eventEmitter: Phaser.Events.EventEmitter;
 };
 
-function GameWrapper({ width, height, eventEmitter }: GameWrapperProps) {
+function PhaserWrapper({ width, height, eventEmitter }: PhaserWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
 
@@ -30,7 +30,7 @@ function GameWrapper({ width, height, eventEmitter }: GameWrapperProps) {
       game.destroy(true);
       gameRef.current = null;
     };
-  }, [width, height]);
+  }, [width, height, eventEmitter]);
 
   return (
     <div className="border-2 border-zinc-500">
@@ -39,4 +39,4 @@ function GameWrapper({ width, height, eventEmitter }: GameWrapperProps) {
   );
 }
 
-export default GameWrapper;
+export default PhaserWrapper;
