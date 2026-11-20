@@ -58,6 +58,13 @@ export class Game extends Scene {
       }
     }
 
+    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+      if (this.gameover) {
+        this.scene.start("MainMenu");
+      }
+      this.snake.changeDirectionFromCoordinates(pointer.x, pointer.y);
+    });
+
     this.input.keyboard?.on("keydown-A", () => {
       this.snake.changeDirection("left");
     });
@@ -97,7 +104,7 @@ export class Game extends Scene {
       .text(
         this.registry.get("titleX"),
         this.registry.get("titleY"),
-        `Game over\nscore: ${score}/${this.gameCoordinates.length}\npress space`,
+        `Game over\nscore: ${score}/${this.gameCoordinates.length}\nclick/space to restart`,
         this.registry.get("textStyle"),
       )
       .setOrigin(0.5);

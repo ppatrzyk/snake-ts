@@ -6,6 +6,8 @@ type Body = Array<GameObjects.Image>;
 
 export class Snake extends GameObjects.GameObject {
   snakeBody: Body = [];
+  horizontalDir: Set<Direction> = new Set(["left", "right"]);
+  verticalDir: Set<Direction> = new Set(["down", "up"]);
   previousDirection: Direction = "right";
   nextDirection: Direction = "right";
   stepSize: number = STEP_SIZE;
@@ -21,19 +23,36 @@ export class Snake extends GameObjects.GameObject {
   }
 
   changeDirection(newDirection: Direction) {
-    const horizontal: Set<Direction> = new Set(["left", "right"]);
-    const vertical: Set<Direction> = new Set(["down", "up"]);
     const change: Set<Direction> = new Set([
       this.previousDirection,
       newDirection,
     ]);
     if (
-      this.areSetsEqual(change, horizontal) ||
-      this.areSetsEqual(change, vertical)
+      this.areSetsEqual(change, this.horizontalDir) ||
+      this.areSetsEqual(change, this.verticalDir)
     ) {
       // ignore, opposite direction
     } else {
       this.nextDirection = newDirection;
+    }
+  }
+
+  changeDirectionFromCoordinates(x: number, y: number) {
+    const snakeHeadObj = this.snakeBody[this.snakeBody.length - 1];
+    // console.log('Canvas coordinates:', x, y);
+    // console.log('snakeHeadObj coordinates:', snakeHeadObj.x, snakeHeadObj.y);
+    if (this.horizontalDir.has(this.previousDirection)) {
+      if (y >= snakeHeadObj.y) {
+        this.changeDirection("down");
+      } else {
+        this.changeDirection("up");
+      }
+    } else if (this.verticalDir.has(this.previousDirection)) {
+      if (x >= snakeHeadObj.x) {
+        this.changeDirection("right");
+      } else {
+        this.changeDirection("left");
+      }
     }
   }
 

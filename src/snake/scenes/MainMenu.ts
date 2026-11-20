@@ -34,12 +34,15 @@ export class MainMenu extends Scene {
       .text(
         this.registry.get("titleX"),
         this.registry.get("titleY"),
-        "press space",
+        "click/space to start",
         this.registry.get("textStyle"),
       )
       .setOrigin(0.5);
 
     this.input.keyboard?.on("keydown-SPACE", () => {
+      this.scene.start("Game");
+    });
+    this.input.on("pointerdown", (_pointer: Phaser.Input.Pointer) => {
       this.scene.start("Game");
     });
   }
