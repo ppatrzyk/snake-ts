@@ -5,13 +5,19 @@ import Phaser from "phaser";
 import { STEP_SIZE } from "../snake/scenes/Game";
 
 function GameComponent() {
-  const defaultMapSize = 16;
+  const availableSizePx = Math.min(window.innerHeight, window.innerWidth);
+  const defaultMaxMapSize = 24;
+  const maxMapSize = Math.min(
+    Math.floor(availableSizePx / 32),
+    defaultMaxMapSize,
+  );
+  const minMapSize = 8;
   const defaultSnakeSpeed = 5;
 
   const [gameRunning, setGameRunning] = useState(false);
   const [score, setScore] = useState(1);
   const [pastScores, setPastScores] = useState<number[]>([]);
-  const [mapSize, setMapSize] = useState(defaultMapSize);
+  const [mapSize, setMapSize] = useState(maxMapSize);
   const [mapSizePx, setMapSizePx] = useState(STEP_SIZE * mapSize); // this should not be reactive, set only on explicit restart
   const [snakeSpeed, setSnakeSpeed] = useState(defaultSnakeSpeed);
   const [gameKey, setGameKey] = useState(crypto.randomUUID());
@@ -46,7 +52,7 @@ function GameComponent() {
 
   return (
     <div className="mb-2">
-      <div className="grid grid-cols-1 md:grid-cols-2 border-2 border-zinc-500 min-w-md mb-4 p-2 text-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 border-2 border-zinc-500 md:min-w-md mb-4 p-2 text-center">
         <div>
           <h1 className="text-4xl font-bold m-2 bg-gradient-to-r from-emerald-300 via-snake to-emerald-500 bg-clip-text text-transparent">
             SNAKE
@@ -69,8 +75,8 @@ function GameComponent() {
               <input
                 type="range"
                 className="h-3 appearance-none rounded-full bg-zinc-500"
-                min={8}
-                max={24}
+                min={minMapSize}
+                max={maxMapSize}
                 value={mapSize}
                 onChange={(event) => setMapSize(event.target.valueAsNumber)}
               />
